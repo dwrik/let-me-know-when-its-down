@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function AuthForm({ error, type, onSubmit }) {
+export default function AuthForm({ message, type, onSubmit }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -16,10 +16,15 @@ export default function AuthForm({ error, type, onSubmit }) {
       </header>
       <main className='d-flex justify-content-center'>
         <form className='d-flex flex-column my-5' onSubmit={onSubmit}>
-          <input className='form-control noborder my-2' placeholder='Email' type='email' name='email' value={email} onChange={changeEmail} />
-          <input className='form-control noborder my-2' placeholder='Password' type='password' name='password' value={password} onChange={changePassword} />
+          <input className='form-control noborder my-2' placeholder='Email' type='email' name='email' value={email} onChange={changeEmail} required />
+          <input className='form-control noborder my-2' placeholder='Password' type='password' name='password' value={password} onChange={changePassword} required />
           <input className='btn btn-dark btn-md my-2' type='submit' value={type} />
-          <div className='text-danger text-center mt-2'>{error}</div>
+          {message
+            ? <div className={`text-${message.type === 'error' ? 'danger' : 'success'} text-center mt-2`}>
+                {message.content}
+              </div>
+            : null
+          }
         </form>
       </main>
     </div>
