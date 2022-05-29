@@ -1,12 +1,26 @@
-import Link from 'next/link'
+import { useState } from 'react'
+import AuthForm from '../components/authForm'
 
 export default function SignIn() {
+  const [error, setError] = useState(null)
+
+  function logIn(event) {
+    event.preventDefault()
+
+    const formData = new FormData(event.target)
+    const email = formData.get('email')
+    const password = formData.get('password')
+
+    // POST /api/login
+    try {
+      // on success, store jwt in state & localStorage
+      // redirect to /dashboard
+    } catch (error) {
+      // on error show error message above sign up button
+    }
+  }
+
   return (
-    <div>
-      <h1>Sign In</h1>
-      <Link href='/signup'>
-        <a>Sign Up</a>
-      </Link>
-    </div>
+    <AuthForm error={error} type='Sign in' onSubmit={logIn} />
   )
 }
