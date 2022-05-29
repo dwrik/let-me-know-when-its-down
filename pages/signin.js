@@ -1,26 +1,41 @@
-import { useState } from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/router'
+import { useContext, useState } from 'react'
 import AuthForm from '../components/authForm'
+import userContext from '../contexts/user'
 
 export default function SignIn() {
-  const [error, setError] = useState(null)
+  const [message, setMessage] = useState(null)
+  const { setUser } = useContext(userContext)
+  const router = useRouter()
 
-  function logIn(event) {
+  async function logIn(event) {
     event.preventDefault()
 
     const formData = new FormData(event.target)
     const email = formData.get('email')
     const password = formData.get('password')
 
-    // POST /api/login
     try {
-      // on success, store jwt in state & localStorage
-      // redirect to /dashboard
+      const response = await axios.post('/api/login', { email, password })
+      console.log(response)
+
+      window.localStorage.setItem(
+        'lmkwid-token', JSON.stringify(response.data)
+      )
+
+      router.push('/dashboard')
+      setUser(response.data)
+      setMessage(null)
     } catch (error) {
-      // on error show error message above sign up button
+      setMessage({
+        type: 'error',
+        content: error.response.data.error,
+      })
     }
   }
 
   return (
-    <AuthForm error={error} type='Sign in' onSubmit={logIn} />
+    <AuthForm message={message} type='Sign in' onSubmit={logIn} />
   )
 }

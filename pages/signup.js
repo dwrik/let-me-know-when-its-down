@@ -1,29 +1,37 @@
+import axios from 'axios'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import AuthForm from '../components/authForm'
 
 export default function SignUp() {
-  const [error, setError] = useState(null)
+  const [message, setMessage] = useState(null)
+  const router = useRouter()
 
-  function createAccount(event) {
+  async function createAccount(event) {
     event.preventDefault()
 
     const formData = new FormData(event.target)
     const email = formData.get('email')
     const password = formData.get('password')
 
-    // POST /api/users
     try {
-      // separate util to create user, login user, check website etc.
-
-      // on success, POST /api/login with received user data
-      // on success, store jwt in state & localStorage
-      // redirect to /dashboard
+      await axios.post('/api/users', { email, password })
+      setMessage({
+        type: 'success',
+        content: 'Sign up successful!',
+      })
+      setTimeout(() => {
+        router.push('/signin')
+      }, 2000)
     } catch (error) {
-      // on error show error message above sign up button
+      setMessage({
+        type: 'error',
+        content: error.response.data.error,
+      })
     }
   }
 
   return (
-    <AuthForm error={error} type='Sign up' onSubmit={createAccount} />
+    <AuthForm message={message} type='Sign up' onSubmit={createAccount} />
   )
 }
