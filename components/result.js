@@ -1,10 +1,5 @@
 import { parse } from 'tldts'
 
-// helper
-function capitalize(string) {
-  return string[0].toUpperCase() + string.substring(1)
-}
-
 function Statistic({ property, value }) {
   return (
     <div className='d-flex justify-content-between'>
@@ -20,7 +15,14 @@ export default function Result({ result }) {
   }
 
   const {status, statusText, host } = result
-  const name = capitalize(parse(host).domainWithoutSuffix)
+  const { domainWithoutSuffix } = parse(host)
+
+  if (domainWithoutSuffix === null) {
+    return null
+  }
+
+  const name =
+    domainWithoutSuffix[0].toUpperCase() + domainWithoutSuffix.substring(1)
 
   return (
     <div className='card mt-5 border-dark col-8 col-lg-6 col-xl-5'>
@@ -32,7 +34,7 @@ export default function Result({ result }) {
         <p className='mt-4 mb-0'>
           {status >= 200 && status < 400
             ? <b className='text-success'>&#9679; {name} is up and reachable by us.</b>
-            : <b className='text-danger'>&#9679; {name} is likely down at this time!</b>
+            : <b className='text-danger'>&#9679; {name} might be down right now!</b>
           }
         </p>
       </div>
