@@ -1,5 +1,7 @@
 import Link from 'next/link'
+import { useContext } from 'react'
 import { useRouter } from 'next/router'
+import userContext from '../contexts/user'
 
 function NavItem({ href, text, pathname, index, array }) {
   const isActive = pathname === href
@@ -16,6 +18,24 @@ function NavItem({ href, text, pathname, index, array }) {
 
 export default function Navbar() {
   const router = useRouter()
+  const { user, setUser } = useContext(userContext)
+
+  function logoutUser() {
+    setUser({ email: null, token: null })
+    window.localStorage.removeItem('lmkwid-token')
+    router.push('/')
+  }
+
+  if (user.token) {
+    return (
+      <div className='d-flex justify-content-end'>
+        <button type='button' onClick={logoutUser} className='btn btn-link text-decoration-none text-secondary m-3'>
+          Logout
+        </button>
+      </div>
+    )
+  }
+
   const navItems = ['', 'Sign up', 'Sign in']
 
   return (
