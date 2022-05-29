@@ -1,5 +1,4 @@
 .title {
-  /* font-size: calc(1.625rem + 4.5vw); */
   font-size: calc(1.825rem + 6.5vw);
   line-height: 1.2;
 }
@@ -7,18 +6,4 @@
   .title {
     font-size: 7rem;
   }
-}
-
-.boldest {
-  font-weight: 900;
-}
-
-.noborder {
-  border-color: black;
-}
-
-.noborder:focus {
-  /* border-color: #ced4da; */
-  border-color: black;
-  box-shadow: none;
 }

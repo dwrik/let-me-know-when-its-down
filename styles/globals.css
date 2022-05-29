@@ -9,3 +9,17 @@ body {
 * {
   box-sizing: border-box;
 }
+
+.boldest {
+  font-weight: 900;
+}
+
+.noborder {
+  border-color: black;
+}
+
+.noborder:focus {
+  border-color: black;
+  box-shadow: none;
+  outline: none;
+}
