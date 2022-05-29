@@ -20,11 +20,10 @@ export default function Home() {
     try {
       const sanitized = sanitizeUrl(domain)
       const normalized = normalizeUrl(sanitized, { forceHttps: true })
-      axios.get(`/api/check?domain=${normalized}`)
+      axios.post('/api/check', { domain: normalized })
         .then((response) => {
           setResult({ ...response.data })
         })
-      console.log('finished')
       setResult('Checking')
     } catch (error) {
       console.log(error)
@@ -33,9 +32,9 @@ export default function Home() {
   }
 
   return (
-    <div className='container outer-container'>
+    <div className='container'>
       <header className={`text-center container ${styles.titleContainer}`}>
-        <h1 className={`${styles.title} ${styles.boldest}`}>
+        <h1 className={`${styles.title} boldest`}>
           Let Me Know<br />
           When It&apos;s<br/>
           <span className='text-danger'>Down</span>
@@ -59,7 +58,7 @@ export default function Home() {
               value={domain}
               onChange={changeDomain}
               placeholder='Enter a domain to check...'
-              className={`form-control form-control-lg ${styles.noborder}`}
+              className={`form-control form-control-lg noborder`}
             />
             <button className='btn btn-dark' type='submit' onClick={checkDomain}>Check</button>
           </div>
