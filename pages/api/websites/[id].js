@@ -1,5 +1,5 @@
 import dbConnect from '../../../lib/dbConnect'
-import userExtract from '../../../lib/userExtract'
+import authCheck from '../../../lib/authCheck'
 import Website from '../../../models/website'
 
 export default async function handler(req, res) {
@@ -9,11 +9,16 @@ export default async function handler(req, res) {
   } = req
 
   await dbConnect()
-  await userExtract(req, res)
+  await authCheck(req, res)
+
+  const { user } = req
 
   switch (method) {
     case 'DELETE':
-      const { user } = req
+      if (!user) {
+        return
+      }
+
       const website = await Website.findById(id)
 
       if (!(user && website)) {

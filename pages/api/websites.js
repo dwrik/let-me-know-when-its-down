@@ -1,4 +1,4 @@
-import userExtract from '../../lib/userExtract'
+import authCheck from '../../lib/authCheck'
 import dbConnect from '../../lib/dbConnect'
 import Website from '../../models/website'
 
@@ -9,17 +9,25 @@ export default async function handler(req, res) {
   } = req
 
   await dbConnect()
-  await userExtract(req, res)
+  await authCheck(req, res)
 
   const { user } = req
 
   switch (method) {
     case 'GET':
+      if (!user) {
+        return
+      }
+
       const websites = await Website.find({ users: user._id })
       res.status(200).json(websites)
       break
 
     case 'POST':
+      if (!user) {
+        return
+      }
+
       if (!(name && domain && url)) {
         return res.status(400).json({
           error: 'invalid name, domain or host'
