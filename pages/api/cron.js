@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   switch (method) {
     case 'POST':
       try {
-        if (authorization === `Bearer ${process.env.GH_ACTIONS_SECRET}`) {
+        if (authorization === `Bearer ${process.env.LMKWID_CRON_SECRET}`) {
           res.status(200).json({ success: true });
         } else {
           return res.status(401).json({ error: 'Unauthorized' });
