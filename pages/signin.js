@@ -18,15 +18,9 @@ export default function SignIn() {
 
     try {
       const response = await axios.post('/api/login', { email, password })
-      console.log(response)
-
-      window.localStorage.setItem(
-        'lmkwid-token', JSON.stringify(response.data)
-      )
-
-      router.push('/dashboard')
+      window.localStorage.setItem('lmkwid-token', JSON.stringify(response.data))
       setUser(response.data)
-      setMessage(null)
+      router.push('/dashboard')
     } catch (error) {
       setMessage({
         type: 'error',
