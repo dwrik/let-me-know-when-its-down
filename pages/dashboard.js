@@ -1,5 +1,5 @@
 import { parse } from 'tldts'
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { sanitizeUrl } from '@braintree/sanitize-url'
 import normalizeUrl from 'normalize-url'
 import axios from 'axios'
