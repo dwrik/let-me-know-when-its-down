@@ -2,6 +2,7 @@ import emailNotify from '../../lib/emailNotify'
 import dbConnect from '../../lib/dbConnect'
 import urlCheck from '../../lib/urlCheck'
 import Website from '../../models/website'
+import User from '../../models/user'
 
 export default async function handler(req, res) {
   const {
