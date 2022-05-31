@@ -8,22 +8,29 @@ import Result from '../components/result'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  const [domain, setDomain] = useState('')
+  const [website, setWebsite] = useState('')
   const [result, setResult] = useState(null)
 
-  function changeDomain(event) {
-    setDomain(event.target.value)
+  function changeWebsite(event) {
+    setWebsite(event.target.value)
   }
 
-  function checkDomain(event) {
+  function checkWebsite(event) {
     event.preventDefault()
+
     try {
-      const sanitized = sanitizeUrl(domain)
-      const normalized = normalizeUrl(sanitized, { forceHttps: true })
-      axios.post('/api/check', { domain: normalized })
+      const normalized = normalizeUrl(website, {
+        forceHttps: true,
+        stripHash: true,
+        removeQueryParameters: true
+      })
+
+      const sanitized = sanitizeUrl(normalized)
+      axios.post('/api/check', { url: sanitized })
         .then((response) => {
           setResult({ ...response.data })
         })
+
       setResult('Checking')
     } catch (error) {
       console.log(error)
@@ -43,7 +50,7 @@ export default function Home() {
 
       <main className='mt-5 d-flex flex-column align-items-center'>
         <p className='lead text-center'>
-          Get notified when websites you use are down.<br />
+          Get notified when websites you rely on are down.<br />
           <Link href='/signup'>
             <a className='link-dark'>Sign up</a>
           </Link>{' '}
@@ -54,19 +61,17 @@ export default function Home() {
           <div className='input-group'>
             <input
               type='text'
-              name='domain'
-              value={domain}
-              onChange={changeDomain}
-              placeholder='Enter a domain to check...'
+              name='website'
+              value={website}
+              onChange={changeWebsite}
+              placeholder='Enter a website to check...'
               className={`form-control form-control-lg noborder`}
             />
-            <button className='btn btn-dark' type='submit' onClick={checkDomain}>Check</button>
+            <button className='btn btn-dark' type='submit' onClick={checkWebsite}>Check</button>
           </div>
         </form>
 
         {result ? <Result result={result} /> : null}
-
-        {/* <h2 className={`mt-5 ${styles.boldest}`}>Top Websites</h2> */}
       </main>
     </div>
   )
