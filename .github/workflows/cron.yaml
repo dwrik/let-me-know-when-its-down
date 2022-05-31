@@ -1,0 +1,13 @@
+name: 2-minute-cron-lmkwid
+on:
+  schedule:
+    - cron: '*/2 * * * *'
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call the API route
+        run: |
+          curl --request POST \
+          --url 'https://let-me-know-when-its-down.vercel.app/api/cron' \
+          --header 'Authorization: Bearer ${{ secrets.LMKWID_CRON_SECRET }}'
