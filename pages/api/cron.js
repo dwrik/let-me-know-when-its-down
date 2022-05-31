@@ -12,9 +12,7 @@ export default async function handler(req, res) {
   switch (method) {
     case 'POST':
       try {
-        if (authorization === `Bearer ${process.env.LMKWID_CRON_SECRET}`) {
-          res.status(200).json({ success: true });
-        } else {
+        if (authorization !== `Bearer ${process.env.LMKWID_CRON_SECRET}`) {
           return res.status(401).json({ error: 'Unauthorized' });
         }
       } catch (err) {
@@ -52,6 +50,8 @@ export default async function handler(req, res) {
       }
 
       await emailNotify(mailingList)
+
+      res.status(200).json({ success: true });
       break
 
     default:
