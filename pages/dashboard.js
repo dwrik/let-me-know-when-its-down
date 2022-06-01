@@ -133,9 +133,9 @@ export default function Dashboard() {
       </header>
 
       <main className='d-flex flex-column align-items-center mt-4 col-12'>
-        <p>You will receive alerts in <b>{user.email}</b></p>
+        <p className='text-center'>You will receive alerts in <b>{user.email}</b></p>
 
-        <div className='border border-dark rounded p-4 m-4 col-10 col-md-8 col-xl-6'>
+        <div className='border border-dark rounded table-responsive p-4 m-4 col-12 col-md-8 col-xl-6'>
           {websites.length !== 0
             ? <Websites websites={websites} onClick={deleteWebsite} />
             : <p className='m-4 text-center'>You are not tracking any websites!</p>

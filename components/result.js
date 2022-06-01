@@ -25,7 +25,7 @@ export default function Result({ result }) {
     domainWithoutSuffix[0].toUpperCase() + domainWithoutSuffix.substring(1)
 
   return (
-    <div className='card mt-5 border-dark col-8 col-lg-6 col-xl-5'>
+    <div className='card mt-5 border-dark col-12 col-sm-8 col-lg-6 col-xl-5'>
       <div className='card-body'>
         <h3 className='mb-3'>{name}</h3>
         <Statistic property='Status code' value={status} />
