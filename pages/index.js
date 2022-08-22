@@ -1,8 +1,8 @@
+import {sanitizeUrl} from '@braintree/sanitize-url'
 import axios from 'axios'
 import Link from 'next/link'
 import normalizeUrl from 'normalize-url'
-import { sanitizeUrl } from '@braintree/sanitize-url'
-import { useState } from 'react'
+import {useState} from 'react'
 
 import Result from '../components/result'
 import styles from '../styles/Home.module.css'
@@ -43,7 +43,7 @@ export default function Home() {
       <header className={`text-center container ${styles.titleContainer}`}>
         <h1 className={`${styles.title} boldest`}>
           Let Me Know<br />
-          When It&apos;s<br/>
+          When It&apos;s<br />
           <span className='text-danger'>Down</span>
         </h1>
       </header>
@@ -75,4 +75,10 @@ export default function Home() {
       </main>
     </div>
   )
+}
+
+export async function getStaticProps() {
+  return {
+    props: {},
+  }
 }
