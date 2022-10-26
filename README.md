@@ -8,9 +8,7 @@ Get notified when websites you rely on are down!
 
 Web application which tracks the availability of websites on the internet.
 
-The search bar allows for instantly checking if a website is down.
-
-Signing up for a free account however allows users to track multiple websites at once and receive email alerts when any of those websites are down.
+The search bar allows for instantly checking if a website is down. Signing up for a free account however allows users to track multiple websites at once and receive email alerts when any of those websites are down.
 
 This is made possible by running cron jobs on the backend that check the availability of the tracked sites at regular intervals and notify the affected users if any.
 
